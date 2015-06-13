@@ -12,6 +12,8 @@ public class GameFrame extends JFrame {
 	private static final String PHRASE_TITLE = "Tiles";
 	private static final Dimension SIZE = new Dimension(400, 700);
 	
+	private JPanel currentPanel;
+	
 	public GameFrame() {
 		setTitle(PHRASE_TITLE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,6 +24,14 @@ public class GameFrame extends JFrame {
 	}
 	
 	public void setPanel(JPanel panel) {
+		if (currentPanel != null) {
+			remove(currentPanel);
+		}
+		
 		add(panel, BorderLayout.CENTER);
+		
+		currentPanel = panel;
+		
+		revalidate();
 	}
 }

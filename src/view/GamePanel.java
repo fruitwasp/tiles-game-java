@@ -6,23 +6,25 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import controller.GameController;
+import model.Game;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 	
-	private static final Color BACKGROUND_COLOR = new Color(60, 60, 60);
+	private static final Color BACKGROUND_COLOR = new Color(255, 255, 255);
 	
-	public GamePanel(GameController gameController) {
+	public GamePanel(Game game) {
 		setBackground(BACKGROUND_COLOR);
 		setLayout(new BorderLayout());
 		
-		add(new ScorePanel(gameController), BorderLayout.NORTH);		
-		add(new GridPanel(gameController), BorderLayout.CENTER);		
-		add(new DockPanel(gameController), BorderLayout.SOUTH);		
+		add(new ScorePanel(game), BorderLayout.NORTH);
+		add(new GridPanel(game.getGrid()), BorderLayout.CENTER);
+		add(new DockPanel(game.getDock()), BorderLayout.SOUTH);
 	}
 	
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
+	
 }

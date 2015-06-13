@@ -12,9 +12,13 @@ public class Button extends JButton {
 	
 	public Button(String text) {
 		super(text);
+		
+		setFont(FONT);
 	}
-	
+
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
+	
 }

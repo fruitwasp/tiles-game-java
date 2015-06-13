@@ -1,35 +1,34 @@
 package view;
 
-import helper.Grid;
-
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import model.Grid;
 import observer.GridObserver;
-import controller.GameController;
 
 @SuppressWarnings("serial")
 public class GridPanel extends JPanel implements GridObserver {
-
-	private GameController gameController;
 	
-	private Grid grid;
-	
-	public GridPanel(GameController gameController) {
-		this.gameController = gameController;
-		
-		setOpaque(false);
+	public GridPanel(Grid grid) {		
 		setLayout(new BorderLayout());
+		setOpaque(false);
 		
-		grid = new Grid();
-		grid.fill();
-		
-		add(grid, BorderLayout.CENTER);
+		grid.setObserver(this);
 	}
 	
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
+
+	@Override
+	public void onGridLoaded(String[][] grid) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 }
