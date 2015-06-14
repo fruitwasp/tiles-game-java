@@ -15,8 +15,8 @@ public class Game {
 	private ArrayList<Dock.PuzzleBlock> puzzleBlocks;
 	
 	public Game() {		
-		grid = new Grid();	
-		dock = new Dock();
+		grid = new Grid(this);	
+		dock = new Dock(this);
 		puzzleBlocks = new ArrayList<>();		
 	}
 	

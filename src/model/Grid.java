@@ -6,12 +6,14 @@ public class Grid {
 	
 	private GridObserver gridObserver;
 	
+	private Game game;
+	
 	private String[][] blocks;
 	
-	public Grid() {
-		blocks = new String[10][10];
+	public Grid(Game game) {
+		this.game = game;
 		
-		generate();
+		blocks = new String[10][10];
 	}
 	
 	public void generate() {
@@ -27,6 +29,11 @@ public class Grid {
 			System.out.println("");
 		}
 		
+		gridObserver.onGridLoaded(blocks);
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 	
 	public void setObserver(GridObserver gridObserver) {
