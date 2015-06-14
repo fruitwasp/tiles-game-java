@@ -8,16 +8,19 @@ public class GameController {
 	
 	private Game game;
 	
-	private GameFrame gameFrame;
 	private GamePanel gamePanel;
+	private GameFrame gameFrame;
 	
-	public GameController() {		
+	public GameController() {
 		game = new Game();
 		
 		gamePanel = new GamePanel(game);
 		
 		gameFrame = new GameFrame();
-		gameFrame.setPanel(gamePanel);		
+		gameFrame.setPanel(gamePanel);
+		
+		game.getGrid().generate();
+		game.getDock().generatePuzzleBlocks();
 	}
 	
 }
