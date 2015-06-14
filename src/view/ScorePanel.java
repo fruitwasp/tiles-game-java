@@ -18,6 +18,8 @@ import observer.ScoreObserver;
 @SuppressWarnings("serial")
 public class ScorePanel extends JPanel implements ScoreObserver {
 	
+	private Game game;
+	
 	private static final Dimension SIZE = new Dimension(400, 80);
 	
 	private static final String PHRASE_SURRENDER = "Surrender";
@@ -43,6 +45,8 @@ public class ScorePanel extends JPanel implements ScoreObserver {
 		
 		surrenderButton = (Button) add(new Button(PHRASE_SURRENDER));
 		
+		this.game = game;
+		
 		game.setObserver(this);
 	}
 	
@@ -53,14 +57,12 @@ public class ScorePanel extends JPanel implements ScoreObserver {
 
 	@Override
 	public void onScoreChanged(int score) {
-		// TODO Auto-generated method stub
-		
+		scoreLabel.setText("" + score);
 	}
 
 	@Override
 	public void onHighscoreChanged(int highscore) {
-		// TODO Auto-generated method stub
-		
+		scoreLabel.setText("" + highscore);		
 	}
 
 }

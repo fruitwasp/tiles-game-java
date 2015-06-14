@@ -13,12 +13,16 @@ import observer.DockObserver;
 @SuppressWarnings("serial")
 public class DockPanel extends JPanel implements DockObserver {
 	
-	private static final Dimension SIZE = new Dimension(400, 80);
+	private Dock dock;
+	
+	private static final Dimension SIZE = new Dimension(400, 200);
 	
 	public DockPanel(Dock dock) {		
 		setPreferredSize(SIZE);
 		setLayout(new FlowLayout());
 		setOpaque(false);
+		
+		this.dock = dock;
 		
 		dock.setObserver(this);
 	}
@@ -30,8 +34,10 @@ public class DockPanel extends JPanel implements DockObserver {
 
 	@Override
 	public void onDockLoaded(PuzzleBlock[] puzzleBlocks) {
-		// TODO Auto-generated method stub
 		
+		for (PuzzleBlock puzzleBlock : puzzleBlocks) {
+			add(new JPanel());
+		}
 	}
 
 	@Override
