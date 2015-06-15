@@ -2,8 +2,8 @@ package observer;
 
 import model.Dock.PuzzleBlock;
 
-public interface DockObserver {
+public interface GameObserver {
 
+	public void onGridLoaded(PuzzleBlock[][] blocks);
 	public void onDockLoaded(PuzzleBlock[] puzzleBlocks);
-	public void onPuzzleBlockPlaced(int index);
 }

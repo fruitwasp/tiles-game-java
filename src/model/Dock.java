@@ -1,10 +1,8 @@
 package model;
 
-import observer.DockObserver;
+import java.awt.Color;
 
-public class Dock {	
-
-	private DockObserver dockObserver;
+public class Dock {
 	
 	private Game game;
 	
@@ -47,35 +45,31 @@ public class Dock {
 	
 	public void generatePuzzleBlocks() {
 		for (int i = 0; i < 3; i++) {
-			String str = ALLOWED_PUZZLE_BLOCKS[(int) (Math.random() * ALLOWED_PUZZLE_BLOCKS.length)];
+			String str = ALLOWED_PUZZLE_BLOCKS[(int) (Math.random() * (ALLOWED_PUZZLE_BLOCKS.length - 1))];
+			
+			System.out.println(str);
 			
 			puzzleBlocks[i] = new PuzzleBlock(str);
 		}
 		
-		dockObserver.onDockLoaded(puzzleBlocks);
-	}
-	
-	public void setObserver(DockObserver dockObserver) {
-		this.dockObserver = dockObserver;
-	}
-	
-	public DockObserver getObserver() {
-		return dockObserver;
+		game.getGameObserver().onDockLoaded(puzzleBlocks);
 	}
 	
 	public class PuzzleBlock {
 		
 		private boolean[][] blocks;
+		private Color color;
+		private int x, y;
 		
-		public PuzzleBlock(String puzzleBlockScheme) {
+		public PuzzleBlock(String blueprint) {
 			blocks = new boolean[5][5];
 			
-			char[] blocksScheme = puzzleBlockScheme.toCharArray();
+			char[] splittedBlueprint = blueprint.toCharArray();
 			
 			int i = 0;
 			for (int y = 0; y < blocks.length; y++) {
 				for (int x = 0; x < blocks.length; x++) {
-					blocks[y][x] = blocksScheme[i] == '.';
+					blocks[y][x] = splittedBlueprint[i] != '.';
 					
 					i++;
 				}
@@ -88,6 +82,26 @@ public class Dock {
 			return blocks;
 		}
 		
+		public Color getColor() {
+			return color;
+		}
+		
+		public int getX() {
+			return x;
+		}
+		
+		public int getY() {
+			return y;
+		}
+		
+		public void setX(int x) {
+			this.x = x;
+		}
+		
+		public void setY(int y) {
+			this.y = y;
+		}
+
 	}
 	
 }

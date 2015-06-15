@@ -2,11 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
+import observer.GameObserver;
 import observer.ScoreObserver;
 
 public class Game {
-	
+
 	private ScoreObserver scoreObserver;
+	private GameObserver gameObserver;
 	
 	private int score, highscore;
 	
@@ -20,8 +22,12 @@ public class Game {
 		puzzleBlocks = new ArrayList<>();		
 	}
 	
-	public ScoreObserver getObserver() {
+	public ScoreObserver getScoreObserver() {
 		return scoreObserver;
+	}
+	
+	public GameObserver getGameObserver() {
+		return gameObserver;
 	}
 	
 	public int getScore() {
@@ -44,8 +50,12 @@ public class Game {
 		return puzzleBlocks;
 	}
 	
-	public void setObserver(ScoreObserver scoreObserver) {
+	public void setScoreObserver(ScoreObserver scoreObserver) {
 		this.scoreObserver = scoreObserver;
+	}
+	
+	public void setGameObserver(GameObserver gameObserver) {
+		this.gameObserver = gameObserver;
 	}
 	
 	public void setScore(int score) {

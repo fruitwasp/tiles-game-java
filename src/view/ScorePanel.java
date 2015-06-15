@@ -30,13 +30,14 @@ public class ScorePanel extends JPanel implements ScoreObserver {
 	
 	public ScorePanel(Game game) {		
 		setPreferredSize(SIZE);
-		setLayout(new FlowLayout());
 		setOpaque(false);
 		
 		try {
-			throphyImage = ImageIO.read(new File("res/throphy.png"));
+	//		throphyImage = ImageIO.read(new File("res/throphy.png"));
 		}
-		catch (Exception e) {}
+		catch (Exception e) {
+			e.printStackTrace();			
+		}
 		
 		scoreLabel = (Label) add(new Label());
 		scoreLabel.setText("0");
@@ -47,7 +48,7 @@ public class ScorePanel extends JPanel implements ScoreObserver {
 		
 		this.game = game;
 		
-		game.setObserver(this);
+		game.setScoreObserver(this);
 	}
 	
 	@Override

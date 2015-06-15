@@ -1,27 +1,28 @@
 package helper;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Block extends JPanel {
 	
-	private String letter;
+	private int x, y;
 	
-	public Block(String letter) {		
-		this.letter = letter;
+	public int getX() {
+		return x;
 	}
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		
-		int width = getWidth();
-		int height = getHeight();
-		
-		g.setColor(new Color(200, 200, 200));
-		g.fillRect(0, 0, width, height);
+	public int getY() {
+		return y;
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
 	}
 	
 }
+
+
