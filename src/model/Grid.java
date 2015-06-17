@@ -1,5 +1,10 @@
 package model;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import model.Dock.PuzzleBlock;
 import observer.GameObserver;
 
@@ -8,6 +13,7 @@ public class Grid {
 	private Game game;
 	private GameObserver gameObserver;
 	
+	private static AudioClip clip;
 	private static final int ROW_COUNT = 10, COLUMN_COUNT = 10;
 	private static final int TILE_SIZE = 32, TILE_GAP = 2;
 	private char[][] blocks;
@@ -16,6 +22,12 @@ public class Grid {
 	
 	public Grid(Game game) {
 		this.game = game;
+		
+		try {
+			clip = Applet.newAudioClip(new URL("file://res/win.wav"));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		
 		blocks = new char[ROW_COUNT][COLUMN_COUNT];
 	}
@@ -180,6 +192,11 @@ public class Grid {
 		if (!occupied) {
 			// TODO: bonus
 			int lines = rowsTotal + columnsTotal;
+			
+			if (lines > 0) {
+				clip.play();
+			}
+			
 			int score = puzzleBlock.getBlocksCount() + 10 * lines;
 			System.out.println(score);
 			game.addScore(score);
