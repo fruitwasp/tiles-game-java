@@ -3,6 +3,7 @@ package view;
 import helper.Button;
 import helper.Label;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -63,7 +64,7 @@ public class ScorePanel extends JPanel implements ScoreObserver {
 
 	@Override
 	public void onHighscoreChanged(int highscore) {
-		scoreLabel.setText("" + highscore);		
+		highscoreLabel.setText("" + highscore);		
 	}
 
 }
