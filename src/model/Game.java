@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-
+import model.Dock.PuzzleBlock;
 import observer.GameObserver;
 import observer.ScoreObserver;
 
@@ -14,12 +13,10 @@ public class Game {
 	
 	private Grid grid;
 	private Dock dock;
-	private ArrayList<Dock.PuzzleBlock> puzzleBlocks;
 	
 	public Game() {		
 		grid = new Grid(this);	
-		dock = new Dock(this);
-		puzzleBlocks = new ArrayList<>();		
+		dock = new Dock(this);	
 	}
 	
 	public ScoreObserver getScoreObserver() {
@@ -46,28 +43,46 @@ public class Game {
 		return dock;
 	}
 	
-	public ArrayList<Dock.PuzzleBlock> getPuzzleBlocks() {
-		return puzzleBlocks;
-	}
-	
 	public void setScoreObserver(ScoreObserver scoreObserver) {
 		this.scoreObserver = scoreObserver;
 	}
 	
 	public void setGameObserver(GameObserver gameObserver) {
 		this.gameObserver = gameObserver;
+		
+		dock.setGameObserver(gameObserver);
+		grid.setGameObserver(gameObserver);
 	}
 	
 	public void setScore(int score) {
 		this.score = score;
+		
+		if (score > highscore) {
+			setHighscore(score);
+		}
+		
+		scoreObserver.onScoreChanged(score);
 	}
 	
 	public void setHighscore(int highscore) {
 		this.highscore = highscore;
+		
+		scoreObserver.onHighscoreChanged(highscore);
 	}	
 	
 	public void addScore(int score) {
-		this.score += score;
-	}	
+		int newscore = this.score + score;
+		
+		setScore(newscore);
+	}
+	
+	public void onPuzzleBlockReleased(PuzzleBlock selectedPuzzleBlock, int selectedPuzzleBlockId, int x, int y) {
+		boolean occupied = grid.onPuzzleBlockReleased(selectedPuzzleBlock, x, y);
+		
+		if (!occupied) {
+			dock.onPuzzleBlockPlaced(selectedPuzzleBlockId);
+		}
+		
+	}
 
 }
