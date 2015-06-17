@@ -1,5 +1,6 @@
 package helper;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -13,6 +14,8 @@ public class Button extends JButton {
 	public Button(String text) {
 		super(text);
 		
+		setFocusPainted(false);
+		setBackground(Color.WHITE);
 		setFont(FONT);
 	}
 
