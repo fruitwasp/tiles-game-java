@@ -28,7 +28,7 @@ public class Dock {
 		"xxx..x....x..............",
 		"xxx..xxx..xxx............"
 	};
-	private static final char[] ALLOWED_LETTERS = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'};
+	private static final char[] ALLOWED_LETTERS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'};
 	private PuzzleBlock[] puzzleBlocks;
 	private int puzzleBlockCount;
 	
@@ -47,22 +47,69 @@ public class Dock {
 		return game;
 	}
 	
+	public void setPuzzleBlocks(PuzzleBlock[] puzzleBlocks) {
+		this.puzzleBlocks = puzzleBlocks;
+	}
+	
 	public PuzzleBlock[] getPuzzleBlocks() {
 		return puzzleBlocks;
 	}
 	
-	private char fetchLetterById(int id) {
-		return Dock.ALLOWED_LETTERS[id];
+	private static char fetchLetterById(int id) {
+		return ALLOWED_LETTERS[id];
+	}
+	
+	@Override
+	public String toString() {
+		String str = "";
+		
+		for (PuzzleBlock puzzleBlock : puzzleBlocks) {
+			if (puzzleBlock == null) {
+				continue;
+			}
+			
+			System.out.println(puzzleBlock.getId());
+			
+			str += puzzleBlock.getId() + " ";
+		}
+		
+		str += "\n";
+		
+		return str;
+	}
+	
+	public void loadPuzzleBlocks(int[] blocks) {
+		
+		for (int i = 0; i < 3; i++) {
+			int a = blocks[i];
+			
+			if (a == 0) {
+				continue;
+			}
+			
+			String str = ALLOWED_PUZZLE_BLOCKS[a];
+			
+			System.out.println(str);
+			
+			puzzleBlocks[i] = new PuzzleBlock(str, fetchLetterById(a), a);
+		}
+		
+		System.out.println("blokjes ingeladen.");
+		
+		puzzleBlockCount = 3;
+		
+		gameObserver.onDockLoaded(puzzleBlocks);
 	}
 	
 	public void generatePuzzleBlocks() {
+			
 		for (int i = 0; i < 3; i++) {
 			int id = (int) (Math.random() * (ALLOWED_PUZZLE_BLOCKS.length - 1));
 			String str = ALLOWED_PUZZLE_BLOCKS[id];
 			
 			System.out.println(str);
 			
-			puzzleBlocks[i] = new PuzzleBlock(str, fetchLetterById(id));
+			puzzleBlocks[i] = new PuzzleBlock(str, fetchLetterById(id), id);
 		}
 		
 		System.out.println("nieuwe blokjes gegenereerd.");
@@ -91,12 +138,14 @@ public class Dock {
 		private boolean[][] blocks;
 		private int blocksCount;
 		private char letter;
+		private int id;
 		
-		public PuzzleBlock(String pattern, char letter) {
+		public PuzzleBlock(String pattern, char letter, int id) {
 			blocks = new boolean[5][5];
 			
 			this.pattern = pattern;
 			this.letter = letter;
+			this.id = id;
 			
 			char[] splittedPattern = pattern.toCharArray();
 			
@@ -120,6 +169,10 @@ public class Dock {
 		
 		public char getLetter() {
 			return letter;
+		}
+		
+		public int getId() {
+			return id;
 		}
 		
 		public boolean[][] getBlocks() {

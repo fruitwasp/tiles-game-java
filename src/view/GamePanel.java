@@ -1,14 +1,12 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.Timer;
 
 import javax.swing.JPanel;
 
@@ -27,6 +25,8 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 	
 	private Game game;
 	
+	private GameOverPanel gameOverPanel;
+	
 	private PuzzleBlock[] puzzleBlocks;
 	private int selectedPuzzleBlockId;
 	
@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 		COLOR_LIGHT_BLUE = new Color(104, 193, 224),
 		COLOR_EMERALD_GREEN = new Color(97, 229, 172);
 	
-	public GamePanel(Game game) {		
+	public GamePanel(Game game) {
 		setLayout(new GridLayout(10, 10, 2, 2));
 		setOpaque(false);
 		
@@ -54,10 +54,12 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 		blocks = new char[COLUMN_COUNT][ROW_COUNT];
 		selectedPuzzleBlockId = -1;
 		
-		addMouseListener(this);
-		addMouseMotionListener(this);
+		gameOverPanel = new GameOverPanel(game, true);
 		
-		game.setGameObserver(this);
+		addMouseListener(this);
+		addMouseMotionListener(this);		
+		
+		game.setGameObserver(this);		
 	}
 	
 	@Override
@@ -132,31 +134,31 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 		Color color = Color.BLACK;
 		
 		switch(letter) {
-		case 'a':
+		case 'A':
 			color = COLOR_PURPLE;
 			break;
-		case 'b': case 'c':
+		case 'B': case 'C':
 			color = COLOR_ORANGE;
 			break;
-		case 'd': case 'e':
+		case 'D': case 'E':
 			color = COLOR_DARK_ORANGE;
 			break;
-		case 'f': case 'g': case 'h': case 'i':
+		case 'F': case 'G': case 'H': case 'I':
 			color = COLOR_GREEN;
 			break;
-		case 'j': case  'k':
+		case 'J': case  'K':
 			color = COLOR_DARK_PURPLE;
 			break;
-		case 'l':
+		case 'L':
 			color = COLOR_LIGHT_GREEN;
 			break;
-		case 'm': case 'n':
+		case 'M': case 'N':
 			color = COLOR_DARK_RED;
 			break;
-		case 'o': case 'p': case 'q': case 'r':
+		case 'O': case 'P': case 'Q': case 'R':
 			color = COLOR_LIGHT_BLUE;
 			break;
-		case 's':
+		case 'S':
 			color = COLOR_EMERALD_GREEN;
 			break;
 	/*	default:
@@ -246,6 +248,10 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 
 	@Override
 	public void mouseDragged(MouseEvent me) {
+		if (selectedPuzzleBlockId == -1) {
+			return;
+		}
+		
 		x = me.getX();
 		y = me.getY();
 		
@@ -255,6 +261,35 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 	@Override
 	public void mouseMoved(MouseEvent me) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGameOver(boolean surrendered) {
+		gameOverPanel.setVisible(true);
+		gameOverPanel.setSurrendered(surrendered);
+		gameOverPanel.setHighscore(game.getHighScore());
+		gameOverPanel.revalidate();
+		
+		add(gameOverPanel, BorderLayout.CENTER);
+		
+		revalidate();
+	}
+
+	@Override
+	public void onCancelGameOver() {
+		gameOverPanel.setVisible(false);
+		remove(gameOverPanel);
+		
+		revalidate();
+	}
+
+	@Override
+	public void onRetryGame() {
+		gameOverPanel.setVisible(false);
+		remove(gameOverPanel);
+		
+		revalidate();
 		
 	}
 	

@@ -16,8 +16,7 @@ public class GameController {
 		
 		gameFrame = new GameFrame(game);
 		
-		game.getGrid().generate();
-		game.getDock().generatePuzzleBlocks();
+		game.loadGame();
 	}
 	
 }

@@ -3,10 +3,11 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import model.Game;
 
@@ -16,8 +17,9 @@ public class GameFrame extends JFrame {
 	private static final Dimension SIZE = new Dimension(400, 700);
 	private static final String PHRASE_TITLE = "Tiles";
 	
-	private JPanel scorePanel, gamePanel;
-	
+	private ScorePanel scorePanel;
+	private GamePanel gamePanel;
+
 	public GameFrame(Game game) {
 		setTitle(PHRASE_TITLE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,15 +30,22 @@ public class GameFrame extends JFrame {
 		getRootPane().setBackground(Color.WHITE);
 		getContentPane().setBackground(Color.WHITE);
 		
-		this.scorePanel = new ScorePanel(game);
-		this.gamePanel = new GamePanel(game);
-		
+		scorePanel = new ScorePanel(game);		
+		gamePanel = new GamePanel(game);		
 		add(scorePanel, BorderLayout.NORTH);
 		add(gamePanel, BorderLayout.CENTER);
 		
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
+		
+		addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				game.onExitGame();				
+			}
+		});
 	}
 	
 }
