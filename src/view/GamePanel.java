@@ -146,7 +146,7 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 		case 'F': case 'G': case 'H': case 'I':
 			color = COLOR_GREEN;
 			break;
-		case 'J': case  'K':
+		case 'J': case 'K':
 			color = COLOR_DARK_PURPLE;
 			break;
 		case 'L':
